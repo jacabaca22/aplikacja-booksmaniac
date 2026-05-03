@@ -49,6 +49,12 @@ function App() {
         setReadingList(readingList.map(b => b.id === bookId ? { ...b, currentPage: page } : b));
     };
 
+    const removeFromReading = (book) => {
+        if (confirm(`Czy na pewno chcesz usunąć "${book.volumeInfo.title}" z listy czytanych wpisów?`)) {
+            setReadingList(readingList.filter(b => b.id !== book.id));
+        }
+    };
+
     const moveToFinished = (book) => {
         const rating = prompt("Oceń książkę (1-10):");
         if (rating) {
@@ -161,9 +167,15 @@ function App() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <button onClick={() => moveToFinished(book)} className="ml-4 shrink-0 bg-transparent border-2 border-green-600 text-green-500 hover:bg-green-600 hover:text-white font-bold px-6 py-2.5 rounded transition-colors active:scale-95">
-                                            ZAKOŃCZ
-                                        </button>
+                                        <div className="ml-4 shrink-0 flex flex-col gap-2">
+                                            <button onClick={() => moveToFinished(book)} className="w-full bg-transparent border-2 border-green-600 text-green-500 hover:bg-green-600 hover:text-white font-bold px-6 py-2.5 rounded transition-colors active:scale-95 shadow-sm">
+                                                ZAKOŃCZ
+                                            </button>
+                                            <button onClick={() => removeFromReading(book)} className="w-full flex items-center justify-center gap-1 text-[#678] hover:text-red-400 font-medium px-4 py-1.5 rounded transition-colors active:scale-95 text-xs tracking-wider border border-transparent hover:border-red-900/30">
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                                USUŃ Z LISTY
+                                            </button>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
