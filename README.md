@@ -11,6 +11,7 @@
 *   📖 **W trakcie czytania**: Możliwość dodania książki do listy "Aktualnie czytane" jednym kliknięciem.
 *   ⭐ **Ocenianie**: System oceniania przeczytanych pozycji (skala 1-10) i przenoszenie ich do prywatnej biblioteki.
 *   🎨 **Modern UI**: Ciemny, elegancki interfejs zbudowany w oparciu o zasady UX.
+*      **Monitorowanie postępów w czytanu**: Możliwość dodania strony na której aktualnie jesteśmy w danej książce.
 
 ---
 

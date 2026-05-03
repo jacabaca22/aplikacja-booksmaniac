@@ -75,7 +75,7 @@ function App() {
                     <div className="flex gap-8 text-xs font-bold uppercase tracking-[0.2em]">
                         <button onClick={() => setActiveTab('home')} className={`hover:text-white transition-all ${activeTab === 'home' ? 'text-white border-b-2 border-green-500 pb-1' : ''}`}>Szukaj</button>
                         <button onClick={() => setActiveTab('reading')} className={`hover:text-white transition-all ${activeTab === 'reading' ? 'text-white border-b-2 border-green-500 pb-1' : ''}`}>Czytam</button>
-                        <button onClick={() => setActiveTab('finished')} className={`hover:text-white transition-all ${activeTab === 'finished' ? 'text-white border-b-2 border-green-500 pb-1' : ''}`}>Biblioteka</button>
+                        <button onClick={() => setActiveTab('finished')} className={`hover:text-white transition-all ${activeTab === 'finished' ? 'text-white border-b-2 border-green-500 pb-1' : ''}`}>Półka</button>
                     </div>
                 </div>
             </nav>
@@ -173,7 +173,7 @@ function App() {
                                             </button>
                                             <button onClick={() => removeFromReading(book)} className="w-full flex items-center justify-center gap-1 text-[#678] hover:text-red-400 font-medium px-4 py-1.5 rounded transition-colors active:scale-95 text-xs tracking-wider border border-transparent hover:border-red-900/30">
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                                USUŃ Z LISTY
+                                                USUŃ
                                             </button>
                                         </div>
                                     </div>
@@ -182,8 +182,40 @@ function App() {
                         )}
                     </section>
                 )}
+                {activeTab === 'finished' && (
+                    <section className="animate-in fade-in duration-700 relative">
+                        <div className="absolute top-0 left-0 bg-[#2c3440] text-green-400 font-bold px-4 py-2 rounded-lg shadow-md border border-[#3d4856]">
+                            <span className="text-[#89a] text-xs uppercase tracking-wider block mb-0.5">W bibliotece:</span>
+                            <span className="text-2xl">{finishedList.length}</span> <span className="text-sm">książek</span>
+                        </div>
 
-                {/* Tutaj możesz dodać widok dla 'finished' w podobnym stylu */}
+                        <h2 className="text-4xl text-white font-serif mb-12 text-center pt-2">Moja cyfrowa półka</h2>
+
+                        {finishedList.length === 0 ? (
+                            <p className="text-center text-[#678] font-medium text-lg mt-10">Twoja cyfrowa półka jest na razie pusta. Zakończ czytanie jakiejś książki!</p>
+                        ) : (
+                            <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-8 lg:grid-cols-10 gap-x-3 gap-y-6">
+                                {finishedList.map(book => (
+                                    <div key={book.id} className="group relative flex flex-col items-center">
+                                        <div className="relative w-full aspect-[2/3] overflow-hidden rounded border border-black/40 shadow hover:border-green-500 transition-colors bg-[#2c3440]">
+                                            <img
+                                                src={book.volumeInfo.imageLinks?.thumbnail?.replace('http:', 'https:') || 'https://placehold.co/150x225/445566/FFF?text=Brak'}
+                                                className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-500"
+                                                alt={book.volumeInfo.title}
+                                            />
+                                            {book.rating && (
+                                                <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm text-yellow-400 text-center text-xs font-bold py-1">
+                                                    ⭐ {book.rating}/10
+                                                </div>
+                                            )}
+                                        </div>
+                                        <h3 className="mt-2 text-white font-medium text-[10px] text-center leading-tight line-clamp-2 w-full opacity-80 group-hover:opacity-100 transition-opacity">{book.volumeInfo.title}</h3>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </section>
+                )}
             </main>
         </div>
     );
