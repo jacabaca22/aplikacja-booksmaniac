@@ -68,9 +68,8 @@ function App() {
             {/* NAVBAR */}
             <nav className="bg-[#2c3440] border-b border-[#456] sticky top-0 z-50 shadow-2xl">
                 <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-green-500 rounded-sm rotate-12"></div>
-                        <h1 className="text-white font-black text-2xl tracking-tighter italic">BOOKSMANIAC</h1>
+                    <div className="flex items-center">
+                        <img src="/booksmaniac-logo.png" alt="Booksmaniac Logo" className="h-10 cursor-pointer hover:scale-105 transition-transform" />
                     </div>
                     <div className="flex gap-8 text-xs font-bold uppercase tracking-[0.2em]">
                         <button onClick={() => setActiveTab('home')} className={`hover:text-white transition-all ${activeTab === 'home' ? 'text-white border-b-2 border-green-500 pb-1' : ''}`}>Szukaj</button>
