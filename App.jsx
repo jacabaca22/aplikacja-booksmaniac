@@ -6,13 +6,35 @@ function App() {
     const [readingList, setReadingList] = useState([]);
     const [finishedList, setFinishedList] = useState([]);
     const [activeTab, setActiveTab] = useState('home');
+    const [error, setError] = useState('');
 
     const searchBooks = async (e) => {
         e.preventDefault();
         if (!query) return;
-        const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
-        const data = await res.json();
-        setResults(data.items || []);
+        setError('');
+
+        try {
+            // Google Books bez klucza wyrzuca 429. OpenLibrary jest darmowe i nielimitowane w ten sam sposób.
+            const res = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=20`);
+            if (!res.ok) throw new Error("API Error");
+            const data = await res.json();
+            
+            const mappedResults = (data.docs || []).map(doc => ({
+                id: doc.key,
+                volumeInfo: {
+                    title: doc.title,
+                    authors: doc.author_name,
+                    imageLinks: doc.cover_i ? {
+                        thumbnail: `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
+                    } : null
+                }
+            }));
+            
+            setResults(mappedResults);
+        } catch (err) {
+            setError('Błąd połączenia z API OpenLibrary lub przekroczono inny limit.');
+            setResults([]);
+        }
     };
 
     const addToReading = (book) => {
@@ -63,6 +85,7 @@ function App() {
                                     SZUKAJ
                                 </button>
                             </form>
+                            {error && <p className="mt-8 text-red-400 font-medium font-sans animate-pulse">{error}</p>}
                         </div>
 
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-10">
@@ -70,7 +93,7 @@ function App() {
                                 <div key={book.id} className="group relative flex flex-col">
                                     <div className="relative aspect-[2/3] overflow-hidden rounded-lg border-[3px] border-transparent group-hover:border-green-500 transition-all duration-300 shadow-2xl bg-[#2c3440]">
                                         <img
-                                            src={book.volumeInfo.imageLinks?.thumbnail?.replace('http:', 'https:') || 'https://via.placeholder.com/300x450?text=Brak+okładki'}
+                                            src={book.volumeInfo.imageLinks?.thumbnail?.replace('http:', 'https:') || 'https://placehold.co/300x450/445566/FFF?text=Brak+Okladki'}
                                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 group-hover:opacity-40"
                                             alt={book.volumeInfo.title}
                                         />

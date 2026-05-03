@@ -31,3 +31,7 @@ Postępuj zgodnie z poniższymi krokami, aby uruchomić projekt lokalnie:
    ```bash
    git clone https://github.com/twoj-uzytkownik/aplikacja-booksmaniac.git
    cd aplikacja-booksmaniac
+2. **Zainstaluj zależności**
+   npm install
+3. **Uruchom serwer deweloperski**
+   npm run dev 
