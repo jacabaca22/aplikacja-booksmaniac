@@ -8,6 +8,9 @@ function App() {
     const [finishedList, setFinishedList] = useState([]);
     const [activeTab, setActiveTab] = useState('home');
     const [error, setError] = useState('');
+    const [ratingBookId, setRatingBookId] = useState(null);
+    const [hoverRating, setHoverRating] = useState(0);
+    const [selectedRating, setSelectedRating] = useState(0);
 
     const searchBooks = async (e) => {
         e.preventDefault();
@@ -55,12 +58,29 @@ function App() {
         }
     };
 
-    const moveToFinished = (book) => {
-        const rating = prompt("Oceń książkę (1-5):");
-        if (rating) {
-            setFinishedList([...finishedList, { ...book, rating }]);
-            setReadingList(readingList.filter(b => b.id !== book.id));
+    const toggleRating = (book) => {
+        if (ratingBookId === book.id && selectedRating > 0) {
+            // Drugie kliknięcie z wybraną oceną → przenieś na półkę
+            confirmFinish(book, selectedRating);
+        } else if (ratingBookId === book.id) {
+            // Drugie kliknięcie bez oceny → zamknij picker
+            setRatingBookId(null);
+            setSelectedRating(0);
+            setHoverRating(0);
+        } else {
+            // Pierwsze kliknięcie → otwórz picker
+            setRatingBookId(book.id);
+            setSelectedRating(0);
+            setHoverRating(0);
         }
+    };
+
+    const confirmFinish = (book, rating) => {
+        setFinishedList([...finishedList, { ...book, rating }]);
+        setReadingList(readingList.filter(b => b.id !== book.id));
+        setRatingBookId(null);
+        setSelectedRating(0);
+        setHoverRating(0);
     };
 
     const coverFallback = (size = '300x450') =>
@@ -170,7 +190,57 @@ function App() {
                                             </div>
                                         </div>
                                         <div className="reading-card-actions">
-                                            <button onClick={() => moveToFinished(book)} className="btn-finish">ZAKOŃCZ</button>
+                                            <button onClick={() => toggleRating(book)} className={`btn-finish ${ratingBookId === book.id ? 'btn-finish--active' : ''}`}>ZAKOŃCZ</button>
+                                            {ratingBookId === book.id && (
+                                                <div className="star-rating-picker">
+                                                    <div className="star-rating-stars">
+                                                        {[1, 2, 3, 4, 5].map(star => {
+                                                            const displayRating = hoverRating || selectedRating;
+                                                            const isFull = displayRating >= star;
+                                                            const isHalf = !isFull && displayRating >= star - 0.5;
+                                                            return (
+                                                                <span key={star} className="star-rating-star">
+                                                                    <span
+                                                                        className="star-half star-half--left"
+                                                                        onMouseEnter={() => setHoverRating(star - 0.5)}
+                                                                        onMouseLeave={() => setHoverRating(0)}
+                                                                        onClick={() => setSelectedRating(star - 0.5)}
+                                                                    />
+                                                                    <span
+                                                                        className="star-half star-half--right"
+                                                                        onMouseEnter={() => setHoverRating(star)}
+                                                                        onMouseLeave={() => setHoverRating(0)}
+                                                                        onClick={() => setSelectedRating(star)}
+                                                                    />
+                                                                    <svg className={`star-icon ${isFull ? 'star--full' : isHalf ? 'star--half-display' : 'star--empty'}`} viewBox="0 0 24 24">
+                                                                        {isHalf ? (
+                                                                            <>
+                                                                                <defs>
+                                                                                    <linearGradient id={`half-${book.id}-${star}`}>
+                                                                                        <stop offset="50%" stopColor="#facc15" />
+                                                                                        <stop offset="50%" stopColor="#3d4856" />
+                                                                                    </linearGradient>
+                                                                                </defs>
+                                                                                <path fill={`url(#half-${book.id}-${star})`} d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                                                            </>
+                                                                        ) : (
+                                                                            <path fill={isFull ? '#facc15' : '#3d4856'} d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                                                        )}
+                                                                    </svg>
+                                                                </span>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                    {selectedRating > 0 && (
+                                                        <button
+                                                            className="star-rating-confirm"
+                                                            onClick={() => confirmFinish(book, selectedRating)}
+                                                        >
+                                                            ✓ {selectedRating}/5
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            )}
                                             <button onClick={() => removeFromReading(book)} className="btn-remove">
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                                 USUŃ
@@ -188,7 +258,7 @@ function App() {
                     <section className="shelf-section">
                         <div className="shelf-counter">
                             <span className="shelf-counter-label">W bibliotece:</span>
-                            <span className="shelf-counter-number">{finishedList.length}</span> <span className="text-sm">📖</span>
+                            <span className="shelf-counter-number">{finishedList.length}</span> <span className="text-3xl">📖</span>
                         </div>
 
                         <h2 className="shelf-title">Moja cyfrowa półka</h2>
