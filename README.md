@@ -11,7 +11,7 @@
 
 *   🔍 **Search**: Instantly search thousands of titles via the *OpenLibrary API* integration.
 *   📖 **Currently Reading**: Add a book to your "Currently Reading" list with a single click.
-*   ⭐ **Rating**: Rate finished books on a 1–10 scale and move them to your personal library shelf.
+*   ⭐ **Rating**: Rate finished books on a 1–5 scale and move them to your personal library shelf.
 *   🎨 **Modern UI**: A dark, elegant interface built around solid UX principles.
 *   📄 **Reading Progress**: Track which page you're currently on for each book in your reading list.
 *   🗑️ **Remove Books**: Easily remove a title from your reading list at any time.
