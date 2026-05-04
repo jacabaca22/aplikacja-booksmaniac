@@ -1,38 +1,44 @@
 
 # 📚 Booksmaniac
 
-**Booksmaniac** to Twoja osobista "biblioteka filmowa" dla książek, inspirowana serwisem Letterboxd. Aplikacja pozwala uporządkować domowy księgozbiór, śledzić postępy w czytaniu i tworzyć listę przeczytanych pozycji wraz z ich ocenami.
+**Booksmaniac** is your personal "movie diary" for books, inspired by Letterboxd. The app lets you organize your home book collection, track your reading progress, and build a list of books you've read along with your ratings.
 
 ---
 
-## ✨ Funkcje
+## ✨ Features
 
-*   🔍 **Wyszukiwanie**: Błyskawiczne przeszukiwanie tysięcy tytułów dzięki integracji z *Google Books API*.
-*   📖 **W trakcie czytania**: Możliwość dodania książki do listy "Aktualnie czytane" jednym kliknięciem.
-*   ⭐ **Ocenianie**: System oceniania przeczytanych pozycji (skala 1-10) i przenoszenie ich do prywatnej biblioteki.
-*   🎨 **Modern UI**: Ciemny, elegancki interfejs zbudowany w oparciu o zasady UX.
-*      **Monitorowanie postępów w czytanu**: Możliwość dodania strony na której aktualnie jesteśmy w danej książce.
+*   🔍 **Search**: Instantly search thousands of titles via the *OpenLibrary API* integration.
+*   📖 **Currently Reading**: Add a book to your "Currently Reading" list with a single click.
+*   ⭐ **Rating**: Rate finished books on a 1–10 scale and move them to your personal library shelf.
+*   🎨 **Modern UI**: A dark, elegant interface built around solid UX principles.
+*   📄 **Reading Progress**: Track which page you're currently on for each book in your reading list.
+*   🗑️ **Remove Books**: Easily remove a title from your reading list at any time.
 
 ---
 
-## 🛠 Technologie
+## 🛠 Tech Stack
 
 *   **Frontend**: [React](https://reactjs.org/) (Vite)
-*   **Stylizacja**: [Tailwind CSS](https://tailwindcss.com/)
-*   **API**: [Google Books API](https://developers.google.com/books)
-*   **Zarządzanie stanem**: React Hooks (`useState`, `useEffect`)
+*   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+*   **API**: [OpenLibrary API](https://openlibrary.org/developers/api)
+*   **State Management**: React Hooks (`useState`)
 
 ---
 
-## 🚀 Instrukcja instalacji i uruchomienia
+## 🚀 Installation & Setup
 
-Postępuj zgodnie z poniższymi krokami, aby uruchomić projekt lokalnie:
+Follow these steps to run the project locally:
 
-1. **Sklonuj repozytorium**
+1. **Clone the repository**
    ```bash
-   git clone https://github.com/twoj-uzytkownik/aplikacja-booksmaniac.git
+   git clone https://github.com/jacabaca22/aplikacja-booksmaniac.git
    cd aplikacja-booksmaniac
-2. **Zainstaluj zależności**
+   ```
+2. **Install dependencies**
+   ```bash
    npm install
-3. **Uruchom serwer deweloperski**
-   npm run dev 
+   ```
+3. **Start the development server**
+   ```bash
+   npm run dev
+   ```
