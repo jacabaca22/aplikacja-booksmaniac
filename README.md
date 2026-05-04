@@ -1,6 +1,6 @@
 
 # 📚 Booksmaniac
-<img width="857" height="291" alt="_04D92DCD-5917-445B-985B-283AF0D4E3A0_-removebg-preview" src="https://github.com/user-attachments/assets/dcc092fc-0de0-41a7-990c-230da1c342ec" />
+<img width="400" height="200" alt="_04D92DCD-5917-445B-985B-283AF0D4E3A0_-removebg-preview" src="https://github.com/user-attachments/assets/dcc092fc-0de0-41a7-990c-230da1c342ec" />
 
 
 **Booksmaniac** is your personal "movie diary" for books, inspired by Letterboxd. The app lets you organize your home book collection, track your reading progress, and build a list of books you've read along with your ratings.
